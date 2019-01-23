@@ -1,21 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 const validUrl = require('valid-url');
 const shortid = require('shortid');
+const cheerio = require('cheerio');
+const axios = require('axios');
 
 //Connect to socket io
-const io = require('../../socket');
+const io = require("../../socket");
 
 // Load Shorter models
-const Shorter = require('../../models/Shorter');
+const Shorter = require("../../models/Shorter");
 
 // Load Users models
-const User = require('../../models/Users');
+const User = require("../../models/Users");
 
 // Load Tracker models
-const Tracker = require('../../models/Trackers');
+const Tracker = require("../../models/Trackers");
 
 // @route GET api/shorters
 // @desc Get shorters url by current user
@@ -30,11 +32,24 @@ router.get('/api/shorters', passport.authenticate('jwt', {session : false}), (re
         return res.status(404).json(errors);
       }
       res.json(shorter)
-      io.getIO().emit('shorter',{shorter : 'shorter'})
     })
     .catch(err => res.status(404).json(err));
+    
 });
 
+// @route DELETE api/shorters/delete
+// @desc DELETE shorters url by current user
+// @access Private
+router.delete('/api/shorters/delete/:id', passport.authenticate('jwt', {session : false}), (req, res) => {
+  Shorter
+    .findById(req.params.id)
+    .then( shorter => {
+      shorter
+        .remove()
+        .then(() => res.json({ success: true }));
+    })
+    .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+});
 
 
 
@@ -42,7 +57,6 @@ router.get('/api/shorters', passport.authenticate('jwt', {session : false}), (re
 // @desc POST url to shorting
 // @access Private
 router.post('/api/shorters', passport.authenticate('jwt', {session : false}), (req, res) => {
-  const errors = {};
   const { originalUrl } = req.body;
   const baseurl = req.headers.host;
   const urlCode = shortid.generate();
@@ -54,24 +68,29 @@ router.post('/api/shorters', passport.authenticate('jwt', {session : false}), (r
       .findOne({urlCode: urlCode})
       .then(urlcode => {
         if(urlcode){
-          errors.urlCode = 'UrlCode already exists, please generate again';
-          return res.status(400).json(errors); //response if already
+          return res.status(400).json({"messange": "please generate again"}); //response if already
         }
-        const newUrl = new Shorter({
-          user: req.user,
-          title: req.body.title || null,
-          originalUrl : req.body.originalUrl,
-          urlCode,
-          shortUrl:baseurl+'/'+urlCode,
-          totalClicks: 0
-        })
-        newUrl
-          .save()
-          .then(newUrl => res.json(newUrl)) //response
-          .catch(err => console.log(err))
+        axios.get(req.body.originalUrl)
+        .then((response) => {
+            const html = response.data;
+            const $ = cheerio.load(html); 
+            const title= $('title').text();
+            const newUrl = new Shorter({
+              user: req.user,
+              title: title,
+              originalUrl : req.body.originalUrl,
+              urlCode,
+              shortUrl:baseurl+'/'+urlCode,
+              totalClicks: 0
+            })
+            newUrl
+              .save()
+              .then(newUrl => res.json(newUrl)) //response
+              .catch(err => console.log(err))
+        });
       })
   }
-});
+);
 
 // @route GET /:code
 // @desc direct to original url
@@ -98,10 +117,11 @@ router.get("/:code", async (req, res) => {
             .save()
             .then(()=>console.log('success'))
           .catch(err => console.log(err));
+          io.getIO().emit('shorter',urlCode)
+          console.log('mantap');
           return res.redirect(urlCode.originalUrl);
         }
       })
 });
-
 
 module.exports = router;

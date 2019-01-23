@@ -7,13 +7,12 @@ Before run this program :
 
 Add your mongodb account in ` config/keys.js `
 
-`
+<code>
 module.exports = {
   mongoURI : 'your mongodb code',
   secretOrKey : 'your secret'
 };
-
-`
+</code>
 
 
 api end point :

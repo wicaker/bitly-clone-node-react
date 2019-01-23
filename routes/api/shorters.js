@@ -24,7 +24,6 @@ const Tracker = require('../../models/Trackers');
 // @access Private
 router.get('/api/shorters', passport.authenticate('jwt', {session : false}), (req, res) => {
   const errors = {};
-  let data =''
   Shorter
     .find({ user: req.user.id })
     .then( shorter => {
@@ -36,6 +35,20 @@ router.get('/api/shorters', passport.authenticate('jwt', {session : false}), (re
     })
     .catch(err => res.status(404).json(err));
     
+});
+
+// @route DELETE api/shorters/delete
+// @desc DELETE shorters url by current user
+// @access Private
+router.delete('/api/shorters/delete/:id', passport.authenticate('jwt', {session : false}), (req, res) => {
+  Shorter
+    .findById(req.params.id)
+    .then( shorter => {
+      shorter
+        .remove()
+        .then(() => res.json({ success: true }));
+    })
+    .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
 });
 
 
@@ -105,6 +118,7 @@ router.get("/:code", async (req, res) => {
             .then(()=>console.log('success'))
           .catch(err => console.log(err));
           io.getIO().emit('shorter',urlCode)
+          console.log('mantap');
           return res.redirect(urlCode.originalUrl);
         }
       })

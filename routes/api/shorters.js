@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -8,16 +8,16 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 
 //Connect to socket io
-const io = require('../../socket');
+const io = require("../../socket");
 
 // Load Shorter models
-const Shorter = require('../../models/Shorter');
+const Shorter = require("../../models/Shorter");
 
 // Load Users models
-const User = require('../../models/Users');
+const User = require("../../models/Users");
 
 // Load Tracker models
-const Tracker = require('../../models/Trackers');
+const Tracker = require("../../models/Trackers");
 
 // @route GET api/shorters
 // @desc Get shorters url by current user
@@ -90,7 +90,7 @@ router.post('/api/shorters', passport.authenticate('jwt', {session : false}), (r
         });
       })
   }
-});
+);
 
 // @route GET /:code
 // @desc direct to original url
@@ -123,6 +123,5 @@ router.get("/:code", async (req, res) => {
         }
       })
 });
-
 
 module.exports = router;

@@ -4,20 +4,22 @@
   "description": "User Service For Stock Prediction Web",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "server": "nodemon app.js", 
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Wicak",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3", 
-    "express": "^4.16.4", 
-    "jsonwebtoken": "^8.4.0", 
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.4",
-    "passport": "^0.4.0", 
+    "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "shortid": "^2.2.14",
+    "valid-url": "^1.0.9",
     "validator": "^10.10.0"
   },
   "devDependencies": {

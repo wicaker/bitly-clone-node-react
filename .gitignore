@@ -1,4 +1,4 @@
 /node_modules
 note.txt
-/config
+/config/keys.js
 package-lock.json

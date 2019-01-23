@@ -39,4 +39,10 @@ app.use('/api/users', users);
 app.use('', shorters);
 
 const port = process.env.PORT || 5000 ; //process.env.PORT because we want to deploy to herouku or somethnig else
-app.listen(port, ()=> console.log(`Server running on port ${port}`));
+
+//connect to server
+const server = app.listen(port, ()=> console.log(`Server running on port ${port}`));
+
+//connect with socket io, websocket protocol
+const io = require('./socket').init(server);
+io.on('connection', socket => console.log('made socket connection, ', socket.id))

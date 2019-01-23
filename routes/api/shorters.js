@@ -5,6 +5,9 @@ const passport = require('passport');
 const validUrl = require('valid-url');
 const shortid = require('shortid');
 
+//Connect to socket io
+const io = require('../../socket');
+
 // Load Shorter models
 const Shorter = require('../../models/Shorter');
 
@@ -27,9 +30,13 @@ router.get('/api/shorters', passport.authenticate('jwt', {session : false}), (re
         return res.status(404).json(errors);
       }
       res.json(shorter)
+      io.getIO().emit('shorter',{shorter : 'shorter'})
     })
     .catch(err => res.status(404).json(err));
 });
+
+
+
 
 // @route POST api/shorters
 // @desc POST url to shorting

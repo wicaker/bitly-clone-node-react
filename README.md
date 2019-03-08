@@ -28,9 +28,9 @@ api end point :
 
 
 # front end
-- in client folder
+- in [https://github.com/wicaker/bitly-clone-client-react-redux] (https://github.com/wicaker/bitly-clone-client-react-redux)
 
 
-Contact `wicaker.com` if have issue or need help
+Contact [wicaker.com](https://www.wicaker.com) if have issue or need help
 
 ### Thank You

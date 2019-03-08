@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const shorters = require("./routes/api/shorters");
+const path = require("path")
 require('dotenv').config()
 
 //Body parser midleware

@@ -4,7 +4,8 @@
   "description": "User Service For Stock Prediction Web",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
+    "server":"nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Wicak",
@@ -14,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",

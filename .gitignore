@@ -2,3 +2,4 @@
 note.txt
 /config/keys.js
 package-lock.json
+.env

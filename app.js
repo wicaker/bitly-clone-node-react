@@ -5,17 +5,18 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const shorters = require("./routes/api/shorters");
+require('dotenv').config()
 
 //Body parser midleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//DB Config
-const db = require("./config/keys").mongoURI;
-
 //Connet to MongoDB
 mongoose
-  .connect(db)
+  .connect(`mongodb://${process.env.MONGO_USER}:${
+    process.env.MONGO_PASSWORD
+    }@ds163014.mlab.com:63014/${process.env.MONGO_DB}`,
+    { useNewUrlParser: true })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
@@ -28,6 +29,12 @@ app.use((req, res, next) => {
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
+});
+
+// serve static front end
+app.use('/', express.static(path.join(__dirname, 'build')));
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 //Passport middleware

@@ -5,16 +5,6 @@ Before run this program :
 > npm install
 ...............
 
-Add your mongodb account in ` config/keys.js `
-
-<code>
-module.exports = {
-  mongoURI : 'your mongodb code',
-  secretOrKey : 'your secret'
-};
-</code>
-
-
 api end point :
 
 >> users endpoint for authentication (register/ login) 
@@ -35,5 +25,12 @@ api end point :
 
 
 >> secure authentication using ` jwt `
+
+
+# front end
+- in client folder
+
+
+Contact `wicaker.com` if have issue or need help
 
 ### Thank You

@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const shorters = require("./routes/api/shorters");
-const path = require("path")
 require('dotenv').config()
 
 //Body parser midleware
@@ -30,24 +29,6 @@ app.use((req, res, next) => {
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
-});
-
-// serve static front end
-app.use('/', express.static(path.join(__dirname, 'build')));
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'));
-});
-app.get('/register', function (req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'));
-});
-app.get('/login', function (req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'));
-});
-app.get('/myurl', function (req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'));
-});
-app.get('/logout', function (req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 //Passport middleware

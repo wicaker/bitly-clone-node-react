@@ -34,7 +34,19 @@ app.use((req, res, next) => {
 
 // serve static front end
 app.use('/', express.static(path.join(__dirname, 'build')));
-app.get('*', function (req, res) {
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
+app.get('/register', function (req, res) {
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
+app.get('/login', function (req, res) {
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
+app.get('/myurl', function (req, res) {
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
+app.get('/logout', function (req, res) {
   res.sendFile(path.join(__dirname, './build/index.html'));
 });
 

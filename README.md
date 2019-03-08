@@ -28,7 +28,7 @@ api end point :
 
 
 # front end
-- in [https://github.com/wicaker/bitly-clone-client-react-redux] (https://github.com/wicaker/bitly-clone-client-react-redux)
+- in [https://github.com/wicaker/bitly-clone-client-react-redux](https://github.com/wicaker/bitly-clone-client-react-redux)
 
 
 Contact [wicaker.com](https://www.wicaker.com) if have issue or need help
